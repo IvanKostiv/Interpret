@@ -1,0 +1,20 @@
+INTEGER, PLUS, MINUS, MUL, DIV, LPAREN, RPAREN, ID, ASSIGN, BEGIN, END, SEMI, DOT, EOF = ('INTEGER', 'PLUS',
+                                                        "MINUS", "MUL", "DIV", "LPAREN", "RPAREN", "ID", "ASSIGN",
+                                                        "BEGIN", "END", "SEMI", "DOT", "EOF")
+
+PRINT = 'print'
+
+
+class Token(object):
+    def __init__(self, token_type: str, value):
+        # this is token type: INTEGER, PLUS or EOF
+        self.type = token_type
+
+        # this is token value: 0, ... 9
+        self.value = value
+
+    def __str__(self):
+        return f"Token<{self.type}><{self.value}>"
+
+    def __repr__(self):
+        return self.__str__()
