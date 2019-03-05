@@ -8,6 +8,7 @@ from NoOperation import NoOperation
 from Assign import Assign
 from Variable import Variable
 from Print import Print
+from String import String
 
 
 class Parser:
@@ -122,7 +123,11 @@ class Parser:
 
         elif self.current_token.type == PRINT:
             self.eat(PRINT)
-            node = Print(self.expr())
+
+            if self.current_token.type == STR:
+                node = Print(self.str())
+            else:
+                node = Print(self.expr())
         else:
             node = self.empty()
 
@@ -134,7 +139,11 @@ class Parser:
         token = self.current_token
         self.eat(ASSIGN)
 
-        right = self.expr()
+        if self.current_token.type == STR:
+            right = self.str()
+        else:
+            right = self.expr()
+
         node = Assign(left, token, right)
 
         return node
@@ -144,6 +153,12 @@ class Parser:
         self.eat(ID)
 
         return node
+
+    def str(self):
+        node = self.current_token
+        self.eat(STR)
+
+        return String(node)
 
     def empty(self):
         return NoOperation()

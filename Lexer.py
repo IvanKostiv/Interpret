@@ -28,7 +28,7 @@ class Lexer:
     def find_expression(self):
         result = ''
 
-        while self.current_char is not None and self.current_char.isalnum() and self.current_char != ';':
+        while self.current_char is not None and (self.current_char.isalnum() or self.current_char == '') and self.current_char != ';':
             result += self.current_char
             self.advance()
 
@@ -66,6 +66,17 @@ class Lexer:
             self.advance()
 
         return float(result)
+
+    def str(self):
+        result = ''
+
+        while self.current_char is not None and self.current_char != '"':
+            result += self.current_char
+            self.advance()
+
+        self.advance()
+
+        return result
 
     def get_next_token(self):
 
@@ -121,6 +132,10 @@ class Lexer:
 
             elif self.current_char.isalpha():
                 return self._id()
+
+            elif self.current_char == '"':
+                self.advance()
+                return Token(STR, self.str())
 
             self.error()
         return Token(EOF, None)

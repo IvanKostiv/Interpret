@@ -34,6 +34,9 @@ class Interpreter(NodeVisitor):
     def visit_Numeric(self, node: Numeric):
         return node.value
 
+    def visit_String(self, node: String):
+        return node.value
+
     def visit_UnaryOperation(self, node: UnaryOperation):
         operation = node.operation.type
 
@@ -45,6 +48,9 @@ class Interpreter(NodeVisitor):
     def visit_Compound(self, node: Compound):
         for child in node.children:
             self.visit(child)
+
+    def visit_Token(self, node: Token):
+        return node.value;
 
     def visit_Assign(self, node: Assign):
         var_name = node.left.value

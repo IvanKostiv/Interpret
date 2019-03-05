@@ -17,7 +17,7 @@ def main():
         interpreter = Interpreter(parser)
         result = interpreter.interpret()
 
-        # print(interpreter.GLOBAL_SCOPE)
+        print(interpreter.GLOBAL_SCOPE)
 
         # file = open("main.lan")
         # lines = "".join(file.readlines())
