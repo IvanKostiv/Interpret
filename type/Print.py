@@ -9,11 +9,11 @@ class Print(AST):
     def print_list(self, node):
         result = "["
 
-        for item in node.value:
+        for item in node.value[:-1]:
             if type(item) == List:
                 result += self.print_list(item)
             else:
                 result += str(item.value) + ", "
-
+        result += str(node.value[-1].value)
         result += ']'
         return result

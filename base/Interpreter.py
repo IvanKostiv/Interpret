@@ -69,17 +69,22 @@ class Interpreter(NodeVisitor):
         print_info = self.visit(node.print)
 
         if type(print_info) == List:
-            print(node.print_list(print_info))
+            result = "["
+            for item in print_info.value:
+                print_a = self.visit(item)
+                if hasattr(print_a, "value"):
+                    result += str(print_a.value) + ", "
+                else:
+                    result += str(print_a) + ", "
+
+            print(result + "]")
         else:
-            print(print_info.value)
+            if hasattr(print_info, "value"):
+                print(print_info.value)
+            else:
+                print(print_info)
 
     def visit_List(self, node: List):
-
-        # list_ = []
-        #
-        # for item in node.list:
-        #     list_.append(self.visit(item))
-
         return node
 
     def visit_MethodCall(self, node: MethodCall):
