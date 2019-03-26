@@ -1,4 +1,4 @@
-from Interpreter import *
+from base.Interpreter import *
 
 
 def main():
@@ -19,6 +19,8 @@ def main():
 
         print(interpreter.GLOBAL_SCOPE)
 
+        if result is not None:
+            print(result)
         # file = open("main.lan")
         # lines = "".join(file.readlines())
         #

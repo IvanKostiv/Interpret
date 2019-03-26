@@ -1,5 +1,6 @@
-INTEGER, PLUS, MINUS, MUL, DIV, LPAREN, RPAREN, ID, ASSIGN, BEGIN, END, SEMI, DOT, EOF, STR = ('INTEGER', 'PLUS',
-                                                        "MINUS", "MUL", "DIV", "LPAREN", "RPAREN", "ID", "ASSIGN",
+INTEGER, PLUS, MINUS, MUL, DIV, COMMA, LQ, RQ, LPAREN, \
+RPAREN, ID, ASSIGN, BEGIN, END, SEMI, DOT, EOF, STR = ('INTEGER', 'PLUS', "MINUS", "MUL", "DIV", "COMMA", "LQ", "RQ",
+                                                       "LPAREN", "RPAREN", "ID", "ASSIGN",
                                                         "BEGIN", "END", "SEMI", "DOT", "EOF", "STR")
 
 PRINT = 'print'

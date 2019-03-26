@@ -1,19 +1,27 @@
 program: compound_statement
 compound_statement: BEGIN statement_list END
 statement_list: statement | statement SEMI statement_list
-statement: compound_statement | assignment_statement | empty
+statement: compound_statement | assignment_statement | method_call | empty
+method_call: variable DOT method_name LPAREN arg RPAREN
+method_name: str
+function: DEF name LPAREN var_declaration RPAREN COLON compound_statement
 empty: PASS
-assignment_statement: variable ASSIGN (expr | str)
+assignment_statement: variable ASSIGN expr
 expr: term((PLUS|MINUS) term)*
 term: factor((MUL|DIV) factor)*
 factor: PLUS factor |
         MINUS factor |
         NUM |
+        str |
+        list |
         LPAREN expr RPAREN |
-        variable
+        variable|
+        method_call
 print: PRINT expr
 
 variable: ID
 
+list: item | item COMMA list
+item: expr
+
 str: STR text STR
-text: SYMBOL | SYMBOL

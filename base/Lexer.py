@@ -1,4 +1,4 @@
-from Token import *
+from base.Token import *
 
 REVERSED_KEYWORDS = {
     "BEGIN": Token('BEGIN', 'BEGIN'),
@@ -38,9 +38,13 @@ class Lexer:
             result += self.current_char
             self.advance()
 
+        # TODO method_call (id analyze, if next token is DOT)
+
         if result in REVERSED_FUNCTION:
             token = Token(PRINT, self.find_expression())
             return token
+        # elif self.peek() == '.':
+        #     pass
         else:
             token = REVERSED_KEYWORDS.get(result, Token(ID, result))  # return ID token, if name is not reversed keywords
             return token
@@ -76,6 +80,16 @@ class Lexer:
 
         self.advance()
 
+        return result
+
+    def find_list(self):
+        result = ''
+
+        while self.current_char is not None and self.current_char != ']':
+            result += self.current_char
+            self.advance()
+
+        self.advance()
         return result
 
     def get_next_token(self):
@@ -133,9 +147,30 @@ class Lexer:
             elif self.current_char.isalpha():
                 return self._id()
 
+            elif self.current_char == '[':
+                self.advance()
+                return Token(LQ, "[")
+
+            elif self.current_char == ']':
+                self.advance()
+                return Token(RQ, "]")
+
+            elif self.current_char == ',':
+                self.advance()
+                return Token(COMMA, ',')
+
             elif self.current_char == '"':
                 self.advance()
                 return Token(STR, self.str())
 
             self.error()
         return Token(EOF, None)
+
+    def get_next_token_without_change_pos(self):
+        current_pos = self.pos
+        current_char = self.current_char
+        token = self.get_next_token()
+
+        self.pos = current_pos
+        self.current_char = current_char
+        return token

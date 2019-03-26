@@ -1,7 +1,8 @@
-from ASTTree import *
+from base.ASTTree import AST
+from base.Token import *
 
 
-class String(AST):
+class Variable(AST):
     def __init__(self, token: Token):
         self.token = token
         self.value = token.value
