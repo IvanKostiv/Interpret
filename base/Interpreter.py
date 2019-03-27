@@ -30,6 +30,15 @@ class Interpreter(NodeVisitor):
         elif node.operation.type == DIV:
             return self.visit(node.left) / self.visit(node.right)
 
+        elif node.operation.type == EQUAL:
+            return self.visit(node.left) == self.visit(node.right)
+
+        elif node.operation.type == LESS:
+            return self.visit(node.left) < self.visit(node.right)
+
+        elif node.operation.type == GREAT:
+            return self.visit(node.left) > self.visit(node.right)
+
     def visit_Numeric(self, node: Numeric):
         return node.value
 
@@ -94,6 +103,17 @@ class Interpreter(NodeVisitor):
         called_method = getattr(self.visit(variable), method)
 
         return called_method(*node.arg_value)
+
+    def visit_If(self, node: If):
+        result_condition = self.visit(node.condition)
+
+        if bool(result_condition):
+            self.visit(node.body)
+        elif node.else_body is not None:
+            self.visit(node.else_body)
+        else:
+            pass
+
 
     def visit_NoOperation(self, node: NoOperation):
         pass

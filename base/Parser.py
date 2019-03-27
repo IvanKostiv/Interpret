@@ -11,6 +11,7 @@ from type.Print import Print
 from type.String import String
 from type.List import List
 from type.MethodCall import MethodCall
+from type.If import If
 
 
 class Parser:
@@ -83,7 +84,7 @@ class Parser:
 
         return node
 
-    def expr(self):
+    def cond(self):
         node = self.term()
 
         while self.current_token.type in (PLUS, MINUS):
@@ -95,6 +96,23 @@ class Parser:
                 self.eat(MINUS)
 
             node = BinaryOperation(left=node, operation=token, right=self.term())
+
+        return node
+
+    def expr(self):
+        node = self.cond()
+
+        while self.current_token.type in (EQUAL, GREAT, LESS):
+            token = self.current_token
+
+            if token.type == EQUAL:
+                self.eat(EQUAL)
+            elif token.type == GREAT:
+                self.eat(GREAT)
+            elif token.type == LESS:
+                self.eat(LESS)
+
+            node = BinaryOperation(left=node, operation=token, right=self.cond())
 
         return node
 
@@ -139,14 +157,11 @@ class Parser:
                 node = self.method()
             else:
                 node = self.assignment_statement()
+        elif self.current_token.type == IF:
+            node = self.condition_statement()
 
         elif self.current_token.type == PRINT:
             self.eat(PRINT)
-
-            # if self.current_token.type == STR:
-            #     node = Print(self.str())
-            # else:
-            #     node = Print(self.expr())
             node = Print(self.expr())
 
         else:
@@ -159,18 +174,33 @@ class Parser:
 
         token = self.current_token
         self.eat(ASSIGN)
-
-        # if self.current_token.type == STR:
-        #     right = self.str()
-        #
-        # elif self.current_token.type == LQ:
-        #     right = self.list()
-        # else:
         right = self.expr()
 
         node = Assign(left, token, right)
 
         return node
+
+    def condition_statement(self):
+        self.eat(IF)
+
+        self.eat(LPAREN)
+        condition = self.expr()
+        self.eat(RPAREN)
+
+        self.eat(LBRANCH)
+        body = self.compound_statement()
+        self.eat(RBRANCH)
+        else_body = None
+
+        if self.current_token.type == ELSE:
+            self.eat(ELSE)
+            self.eat(LBRANCH)
+
+            else_body = self.compound_statement()
+
+            self.eat(RBRANCH)
+
+        return If(body, condition, else_body)
 
     def item(self):
         token = self.current_token

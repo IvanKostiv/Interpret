@@ -2,7 +2,11 @@ from base.Token import *
 
 REVERSED_KEYWORDS = {
     "BEGIN": Token('BEGIN', 'BEGIN'),
-    "END": Token('END', 'END')
+    "END": Token('END', 'END'),
+    "True": Token('TRUE', "TRUE"),
+    "False": Token('FALSE', "FALSE"),
+    'if': Token('IF', "IF"),
+    'else': Token('ELSE', "ELSE")
 }
 
 REVERSED_FUNCTION = [PRINT]
@@ -20,6 +24,14 @@ class Lexer:
 
     def peek(self):
         peek_pos = self.pos
+        if peek_pos > len(self.text) - 1:
+            return None
+        else:
+            return self.text[peek_pos]
+
+    def peek_next(self):
+        peek_pos = self.pos + 1
+
         if peek_pos > len(self.text) - 1:
             return None
         else:
@@ -133,8 +145,13 @@ class Lexer:
                 return Token(RPAREN, ')')
 
             elif self.current_char == '=':
-                self.advance()
-                return Token(ASSIGN, '=')
+                if self.peek_next() == '=':
+                    self.advance()
+                    self.advance()
+                    return Token(EQUAL, '==')
+                else:
+                    self.advance()
+                    return Token(ASSIGN, '=')
 
             elif self.current_char == ';':
                 self.advance()
@@ -162,6 +179,21 @@ class Lexer:
             elif self.current_char == '"':
                 self.advance()
                 return Token(STR, self.str())
+
+            elif self.current_char == '>':
+                self.advance()
+                return Token(GREAT, '>')
+            elif self.current_char == '<':
+                self.advance()
+                return Token(LESS, '<')
+
+            elif self.current_char == '{':
+                self.advance()
+                return Token(LBRANCH, '{')
+
+            elif self.current_char == '}':
+                self.advance()
+                return Token(RBRANCH, '}')
 
             self.error()
         return Token(EOF, None)

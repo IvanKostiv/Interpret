@@ -10,4 +10,5 @@ class MethodCall(AST):
         self.arg_value = []
 
         for token in self.arg_token:
-            self.arg_value.append(token.value)
+            if token.type != COMMA:
+                self.arg_value.append(token.value)

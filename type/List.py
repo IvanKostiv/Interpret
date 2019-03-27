@@ -11,3 +11,9 @@ class List(AST):
             result_string += str(item.value) + ", "
 
         return result_string
+
+    def at(self, pos):
+        if pos > len(self.value) - 1:
+            raise Exception("Out of range")
+        else:
+            return self.value[int(pos)]

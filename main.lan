@@ -1,1 +1,15 @@
-a = [10, 20]; b = [9]; print a + b;
+mode2 = "ivan";
+mode1 = "ivan1";
+mode = 1;
+
+print mode1 < mode2;
+
+if (mode2 == mode1) {
+    form = mode * 10 - 5;
+    print form;
+} else {
+    form = mode * 10 - 100;
+    print form;
+};
+
+print form * 5;

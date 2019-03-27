@@ -1,9 +1,11 @@
 INTEGER, PLUS, MINUS, MUL, DIV, COMMA, LQ, RQ, LPAREN, \
-RPAREN, ID, ASSIGN, BEGIN, END, SEMI, DOT, EOF, STR = ('INTEGER', 'PLUS', "MINUS", "MUL", "DIV", "COMMA", "LQ", "RQ",
-                                                       "LPAREN", "RPAREN", "ID", "ASSIGN",
-                                                        "BEGIN", "END", "SEMI", "DOT", "EOF", "STR")
+RPAREN, ID, ASSIGN, BEGIN, END, SEMI, DOT, EOF, STR, IF, ELSE, BOOL = ('INTEGER', 'PLUS', "MINUS", "MUL", "DIV", "COMMA",
+                                                        "LQ", "RQ", "LPAREN", "RPAREN", "ID", "ASSIGN",
+                                                        "BEGIN", "END", "SEMI", "DOT", "EOF", "STR", "IF", "ELSE", "BOOL")
 
 PRINT = 'print'
+
+TRUE, FALSE, EQUAL, LESS, GREAT, LBRANCH, RBRANCH = "TRUE", "FALSE", "EQUAL", "LESS", "GREAT", "LBRANCH", "RBRANCH"
 
 
 class Token(object):
