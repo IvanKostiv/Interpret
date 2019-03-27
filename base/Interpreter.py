@@ -102,7 +102,12 @@ class Interpreter(NodeVisitor):
 
         called_method = getattr(self.visit(variable), method)
 
-        return called_method(*node.arg_value)
+        arg_list = []
+
+        for arg in node.arg:
+            arg_list.append(self.visit(arg))
+
+        return called_method(*arg_list)
 
     def visit_If(self, node: If):
         result_condition = self.visit(node.condition)
@@ -114,6 +119,16 @@ class Interpreter(NodeVisitor):
         else:
             pass
 
+    def visit_While(self, node: While):
+        while bool(self.visit(node.condition)):
+            self.visit(node.body)
+
+    def visit_For(self, node: For):
+        self.visit(node.assignment)
+
+        while bool(self.visit(node.condition)):
+            self.visit(node.body)
+            self.visit(node.change_node)
 
     def visit_NoOperation(self, node: NoOperation):
         pass

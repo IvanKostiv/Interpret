@@ -12,6 +12,8 @@ from type.String import String
 from type.List import List
 from type.MethodCall import MethodCall
 from type.If import If
+from type.While import While
+from type.For import For
 
 
 class Parser:
@@ -65,9 +67,6 @@ class Parser:
             else:
                 node = self.variable()
                 return node
-        # else:
-        #     node = self.variable()
-        #     return node
 
     def term(self):
         node = self.factor()
@@ -160,6 +159,9 @@ class Parser:
         elif self.current_token.type == IF:
             node = self.condition_statement()
 
+        elif self.current_token.type in (WHILE, FOR):
+            node = self.cycle_statement()
+
         elif self.current_token.type == PRINT:
             self.eat(PRINT)
             node = Print(self.expr())
@@ -201,6 +203,39 @@ class Parser:
             self.eat(RBRANCH)
 
         return If(body, condition, else_body)
+
+    def cycle_statement(self):
+
+        if self.current_token.type == WHILE:
+            self.eat(WHILE)
+
+            self.eat(LPAREN)
+            condition = self.expr()
+            self.eat(RPAREN)
+
+            self.eat(LBRANCH)
+            body = self.compound_statement()
+            self.eat(RBRANCH)
+
+            return While(condition, body)
+        elif self.current_token.type == FOR:
+            self.eat(FOR)
+
+            self.eat(LPAREN)
+            assignment = self.assignment_statement()
+            self.eat(SEMI)
+
+            condition = self.expr()
+            self.eat(SEMI)
+
+            change_node = self.assignment_statement()
+            self.eat(RPAREN)
+
+            self.eat(LBRANCH)
+            body = self.compound_statement()
+            self.eat(RBRANCH)
+
+            return For(condition, assignment, body, change_node)
 
     def item(self):
         token = self.current_token
@@ -248,8 +283,10 @@ class Parser:
         self.eat(LPAREN)
 
         while self.current_token.type != RPAREN:
-            arg_list.append(self.current_token)
-            self.eat(self.current_token.type)
+            arg_list.append(self.expr())
+
+            if self.current_token.type == COMMA:
+                self.eat(COMMA)
 
         self.eat(RPAREN)
 

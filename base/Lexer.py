@@ -6,7 +6,9 @@ REVERSED_KEYWORDS = {
     "True": Token('TRUE', "TRUE"),
     "False": Token('FALSE', "FALSE"),
     'if': Token('IF', "IF"),
-    'else': Token('ELSE', "ELSE")
+    'else': Token('ELSE', "ELSE"),
+    'while': Token("WHILE", "WHILE"),
+    'for': Token("FOR", "FOR")
 }
 
 REVERSED_FUNCTION = [PRINT]
