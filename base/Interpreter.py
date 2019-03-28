@@ -8,6 +8,7 @@ from type.Variable import Variable
 from type.Assign import Assign
 from type.NoOperation import NoOperation
 from type.Print import Print
+from base_object.HTMLAnalyzer import *
 
 
 class Interpreter(NodeVisitor):
@@ -16,6 +17,8 @@ class Interpreter(NodeVisitor):
 
     def __init__(self, parser: Parser):
         self.parser = parser
+
+        self.GLOBAL_SCOPE['document'] = HTMLAnalyzer()
 
     def visit_BinaryOperation(self, node: BinaryOperation):
         if node.operation.type == PLUS:

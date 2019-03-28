@@ -1,17 +1,14 @@
-mode = 1;
-a = [10, 20];
-if(mode == 1){
-    for(i = 0; i < 5; i = i + 1) {
-        for (j = 0; j < 5; j = j + 1) {
-            strI = str(i);
-            strJ = str(j);
+document.addUrl("http://lab4.pvi/html/analyze.html");
+pList = document.findByClass("cool");
 
-            print i;
-            print j;
-        };
-    };
+if (0 == length(pList)){
+    print("Sorry, no one element");
 } else {
-    print ("Sorry, we can't do this");
+    for (i = 0; i < length(pList); i = i + 1) {
+        print pList.at(i);
+    };
 };
 
-print (a);
+
+specialElement = document.findById("this");
+print(specialElement);

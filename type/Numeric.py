@@ -12,25 +12,49 @@ class Numeric(AST):
         return str(self.value)
 
     def __add__(self, other):
-        return Numeric(Token(INTEGER, self.value + other.value))
+        if hasattr(other, 'value'):
+            return Numeric(Token(INTEGER, self.value + other.value))
+        else:
+            return Numeric(Token(INTEGER, self.value + other))
 
     def __sub__(self, other):
-        return Numeric(Token(INTEGER, self.value - other.value))
+        if hasattr(other, 'value'):
+            return Numeric(Token(INTEGER, self.value - other.value))
+        else:
+            return Numeric(Token(INTEGER, self.value - other))
 
     def __mul__(self, other):
-        return Numeric(Token(INTEGER, self.value * other.value))
+        if hasattr(other, 'value'):
+            return Numeric(Token(INTEGER, self.value * other.value))
+        else:
+            return Numeric(Token(INTEGER, self.value * other))
 
     def __truediv__(self, other):
-        return Numeric(Token(INTEGER, self.value / other.value))
+        if hasattr(other, 'value'):
+            return Numeric(Token(INTEGER, self.value / other.value))
+        else:
+            return Numeric(Token(INTEGER, self.value / other))
 
     def __eq__(self, other):
-        return self.value == other.value
+        if hasattr(other, 'value'):
+            return self.value == other.value
+        else:
+            return self.value == other
 
     def __lt__(self, other):
-        return self.value < other.value
+        if hasattr(other, "value"):
+            return self.value < other.value
+        else:
+            return self.value < other
 
     def __gt__(self, other):
-        return self.value > other.value
+        if hasattr(other, 'value'):
+            return self.value > other.value
+        else:
+            return self.value > other
+
+    def __int__(self):
+        return int(self.value)
 
     @staticmethod
     def create_num(num: float):
