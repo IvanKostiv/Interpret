@@ -40,7 +40,7 @@ class Interpreter(NodeVisitor):
             return self.visit(node.left) > self.visit(node.right)
 
     def visit_Numeric(self, node: Numeric):
-        return node.value
+        return node
 
     def visit_String(self, node: String):
         return node
@@ -81,10 +81,16 @@ class Interpreter(NodeVisitor):
             result = "["
             for item in print_info.value:
                 print_a = self.visit(item)
-                if hasattr(print_a, "value"):
-                    result += str(print_a.value) + ", "
-                else:
-                    result += str(print_a) + ", "
+                # while type(print_a) == List:
+                #     print_a = self.visit(print_a.value)
+
+                result += str(print_a) + ", "
+
+
+                # if type(print_a) == List:
+                #     result += str(self.visit(print_a))
+                # else:
+                #     result += str(print_a)
 
             print(result + "]")
         else:
@@ -92,6 +98,15 @@ class Interpreter(NodeVisitor):
                 print(print_info.value)
             else:
                 print(print_info)
+
+    def visit_Length(self, node: Length):
+        return len(self.visit(node.node))
+
+    def visit_StrT(self, node: StrT):
+        return String.create_string(str(self.visit(node.node)))
+
+    def visit_NumT(self, node: NumT):
+        return Numeric.create_num(float(self.visit(node.node)))
 
     def visit_List(self, node: List):
         return node

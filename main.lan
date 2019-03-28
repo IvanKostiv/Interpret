@@ -1,3 +1,17 @@
-for (i = 10; i > 0; i = i - 1) {
-    print i;
-}
+mode = 1;
+a = [10, 20];
+if(mode == 1){
+    for(i = 0; i < 5; i = i + 1) {
+        for (j = 0; j < 5; j = j + 1) {
+            strI = str(i);
+            strJ = str(j);
+
+            print i;
+            print j;
+        };
+    };
+} else {
+    print ("Sorry, we can't do this");
+};
+
+print (a);

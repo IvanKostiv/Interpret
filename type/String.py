@@ -23,6 +23,9 @@ class String(AST):
     def __add__(self, other):
         return String(Token("STR", self.value + other.value))
 
+    def __mul__(self, other):
+        return String(Token("STR", self.value * int(other.value)))
+
     def __eq__(self, other):
         return self.value == other.value
 
@@ -31,3 +34,10 @@ class String(AST):
 
     def __gt__(self, other):
         return self.value > other.value
+
+    def __float__(self):
+        return float(self.value)
+
+    @staticmethod
+    def create_string(string: str):
+        return String(Token(STR, string))

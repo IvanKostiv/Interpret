@@ -7,7 +7,7 @@ from type.Compound import Compound
 from type.NoOperation import NoOperation
 from type.Assign import Assign
 from type.Variable import Variable
-from type.Print import Print
+from type.Print import *
 from type.String import String
 from type.List import List
 from type.MethodCall import MethodCall
@@ -67,6 +67,11 @@ class Parser:
             else:
                 node = self.variable()
                 return node
+
+        elif token.type in (LENGTH, NUM_T, STR_T):
+            node = self.built_in_function()
+
+            return node
 
     def term(self):
         node = self.factor()
@@ -162,9 +167,10 @@ class Parser:
         elif self.current_token.type in (WHILE, FOR):
             node = self.cycle_statement()
 
-        elif self.current_token.type == PRINT:
-            self.eat(PRINT)
-            node = Print(self.expr())
+        elif self.current_token.type in (PRINT, LENGTH, NUM_T, STR_T):
+            # self.eat(PRINT)
+            # node = Print(self.expr())
+            node = self.built_in_function()
 
         else:
             node = self.empty()
@@ -291,6 +297,27 @@ class Parser:
         self.eat(RPAREN)
 
         return MethodCall(variable, method, arg_list)
+
+    def built_in_function(self):
+        if self.current_token.type == PRINT:
+            self.eat(PRINT)
+
+            node = Print(self.expr())
+
+        elif self.current_token.type == LENGTH:
+            self.eat(LENGTH)
+
+            node = Length(self.expr())
+
+        elif self.current_token.type == STR_T:
+            self.eat(STR_T)
+            node = StrT(self.expr())
+
+        elif self.current_token.type == NUM_T:
+            self.eat(NUM_T)
+            node = NumT(self.expr())
+
+        return node
 
     def empty(self):
         return NoOperation()

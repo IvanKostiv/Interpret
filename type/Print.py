@@ -17,3 +17,18 @@ class Print(AST):
         result += str(node.value[-1].value)
         result += ']'
         return result
+
+
+class Length(AST):
+    def __init__(self, node):
+        self.node = node
+
+
+class StrT(AST):
+    def __init__(self, node):
+        self.node = node
+
+
+class NumT(AST):
+    def __init__(self, node):
+        self.node = node

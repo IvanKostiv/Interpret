@@ -11,7 +11,7 @@ REVERSED_KEYWORDS = {
     'for': Token("FOR", "FOR")
 }
 
-REVERSED_FUNCTION = [PRINT]
+REVERSED_FUNCTION = [PRINT, LENGTH, NUM_T, STR_T]
 
 
 class Lexer:
@@ -41,10 +41,14 @@ class Lexer:
 
     def find_expression(self):
         result = ''
+        self.advance()
 
-        while self.current_char is not None and (self.current_char.isalnum() or self.current_char == '') and self.current_char != ';':
+        while self.current_char is not None and (self.current_char.isalnum() or self.current_char == '') and self.current_char != ')':
             result += self.current_char
             self.advance()
+        self.advance()
+
+        return result
 
     def _id(self):
         result = ""
@@ -52,10 +56,8 @@ class Lexer:
             result += self.current_char
             self.advance()
 
-        # TODO method_call (id analyze, if next token is DOT)
-
         if result in REVERSED_FUNCTION:
-            token = Token(PRINT, self.find_expression())
+            token = Token(result, str(result))
             return token
         # elif self.peek() == '.':
         #     pass

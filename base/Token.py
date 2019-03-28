@@ -3,7 +3,7 @@ RPAREN, ID, ASSIGN, BEGIN, END, SEMI, DOT, EOF, STR, IF, ELSE, BOOL = ('INTEGER'
                                                         "LQ", "RQ", "LPAREN", "RPAREN", "ID", "ASSIGN",
                                                         "BEGIN", "END", "SEMI", "DOT", "EOF", "STR", "IF", "ELSE", "BOOL")
 
-PRINT = 'print'
+PRINT, LENGTH, NUM_T, STR_T = 'print', "length", "num", "str"
 
 TRUE, FALSE, EQUAL, LESS, GREAT, LBRANCH, RBRANCH = "TRUE", "FALSE", "EQUAL", "LESS", "GREAT", "LBRANCH", "RBRANCH"
 WHILE, FOR = "WHILE", "FOR"
