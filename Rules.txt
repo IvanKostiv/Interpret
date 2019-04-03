@@ -1,7 +1,8 @@
 program: compound_statement
 compound_statement: BEGIN statement_list END
 statement_list: statement | statement SEMI statement_list
-statement: compound_statement | assignment_statement | method_call | condition_statement | cycle_statement | empty
+statement: compound_statement | assignment_statement | method_call | condition_statement | cycle_statement |
+                                            | thread | empty
 method_call: variable DOT method_name LPAREN arg RPAREN
 method_name: str
 function: DEF name LPAREN var_declaration RPAREN COLON compound_statement
@@ -34,5 +35,7 @@ cycle_statement: (while | for)
 while: WHILE LPAREN expr RPAREN LBRANCH statement_list RBRANCH
 
 for: FOR LPAREN assigment_statement SEMI expr SEMI assigment_statement RPAREN
+
+thread: THREAD LPAREN str RPAREN LBRACKET compound_statement RBRACKET
 
 str: STR text STR

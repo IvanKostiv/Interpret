@@ -9,6 +9,8 @@ from type.Assign import Assign
 from type.NoOperation import NoOperation
 from type.Print import Print
 from base_object.HTMLAnalyzer import *
+import threading as th
+import sys
 
 
 class Interpreter(NodeVisitor):
@@ -19,6 +21,7 @@ class Interpreter(NodeVisitor):
         self.parser = parser
 
         self.GLOBAL_SCOPE['document'] = HTMLAnalyzer()
+        self.lock = th.Lock()
 
     def visit_BinaryOperation(self, node: BinaryOperation):
         if node.operation.type == PLUS:
@@ -80,27 +83,22 @@ class Interpreter(NodeVisitor):
     def visit_Print(self, node: Print):
         print_info = self.visit(node.print)
 
+        output_file = open("F:/Github/Interpret/gui/output.txt", 'at')
+
         if type(print_info) == List:
             result = "["
             for item in print_info.value:
                 print_a = self.visit(item)
-                # while type(print_a) == List:
-                #     print_a = self.visit(print_a.value)
-
                 result += str(print_a) + ", "
 
-
-                # if type(print_a) == List:
-                #     result += str(self.visit(print_a))
-                # else:
-                #     result += str(print_a)
-
-            print(result + "]")
+            print(result + "]", file=output_file)
         else:
             if hasattr(print_info, "value"):
-                print(print_info.value)
+                print(print_info.value, file=output_file)
             else:
-                print(print_info)
+                print(print_info, file=output_file)
+
+        output_file.close()
 
     def visit_Length(self, node: Length):
         return len(self.visit(node.node))
@@ -147,6 +145,10 @@ class Interpreter(NodeVisitor):
         while bool(self.visit(node.condition)):
             self.visit(node.body)
             self.visit(node.change_node)
+
+    def visit_Thread(self, node: Thread):
+        return th.Thread(target=self.visit_Compound, args=(node.body,))
+
 
     def visit_NoOperation(self, node: NoOperation):
         pass

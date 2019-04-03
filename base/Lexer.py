@@ -8,7 +8,8 @@ REVERSED_KEYWORDS = {
     'if': Token('IF', "IF"),
     'else': Token('ELSE', "ELSE"),
     'while': Token("WHILE", "WHILE"),
-    'for': Token("FOR", "FOR")
+    'for': Token("FOR", "FOR"),
+    'thread': Token("THREAD", "THREAD")
 }
 
 REVERSED_FUNCTION = [PRINT, LENGTH, NUM_T, STR_T]

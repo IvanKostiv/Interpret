@@ -14,6 +14,7 @@ from type.MethodCall import MethodCall
 from type.If import If
 from type.While import While
 from type.For import For
+from type.Thread import Thread
 
 
 class Parser:
@@ -70,7 +71,10 @@ class Parser:
 
         elif token.type in (LENGTH, NUM_T, STR_T):
             node = self.built_in_function()
+            return node
 
+        elif token.type == THREAD:
+            node = self.thread()
             return node
 
     def term(self):
@@ -122,7 +126,6 @@ class Parser:
 
     def program(self):
         node = self.compound_statement()
-        # self.eat(DOT)
 
         return node
 
@@ -171,6 +174,9 @@ class Parser:
             # self.eat(PRINT)
             # node = Print(self.expr())
             node = self.built_in_function()
+
+        elif self.current_token.type == THREAD:
+            node = self.thread()
 
         else:
             node = self.empty()
@@ -318,6 +324,15 @@ class Parser:
             node = NumT(self.expr())
 
         return node
+
+    def thread(self):
+        self.eat(THREAD)
+
+        self.eat(LBRANCH)
+        body = self.compound_statement()
+        self.eat(RBRANCH)
+
+        return Thread(body)
 
     def empty(self):
         return NoOperation()

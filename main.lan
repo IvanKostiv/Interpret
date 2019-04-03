@@ -12,3 +12,18 @@ if (0 == length(pList)){
 
 specialElement = document.findById("this");
 print(specialElement);
+
+thread("output2.txt"){
+	document.addUrl("http://lab4.pvi/");
+	listCard = document.findByClass("card-text");
+
+	len = length(listCard);
+
+	if (len == 0) {
+		print("Sorry, no one element");
+	} else {
+		for (i = 0; i < len; i = i + 1) {
+        			print listCard.at(i);
+    		};
+	};
+};
