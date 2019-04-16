@@ -21,7 +21,10 @@ class String(AST):
             return String(Token("STR", self.value[int(start):int(end)]))
 
     def __add__(self, other):
-        return String(Token("STR", self.value + other.value))
+        if type(other.value) in (float, int):
+            return String(Token("STR", self.value + str(other.value)))
+        else:
+            return String(Token("STR", self.value + other.value))
 
     def __mul__(self, other):
         return String(Token("STR", self.value * int(other.value)))

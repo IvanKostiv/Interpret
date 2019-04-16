@@ -60,14 +60,11 @@ class Lexer:
         if result in REVERSED_FUNCTION:
             token = Token(result, str(result))
             return token
-        # elif self.peek() == '.':
-        #     pass
         else:
-            token = REVERSED_KEYWORDS.get(result, Token(ID, result))  # return ID token, if name is not reversed keywords
+            token = REVERSED_KEYWORDS.get(result, Token(ID, result))
             return token
 
     def advance(self):
-        """advance the pos pointer and set the current_char variable"""
         self.pos += 1
 
         if self.pos > len(self.text) - 1:
@@ -110,12 +107,6 @@ class Lexer:
         return result
 
     def get_next_token(self):
-
-        """
-        LEXER FOR INTERPRETER
-        :return: TOKENS
-        """
-
         while self.current_char is not None:
 
             if self.current_char.isspace():

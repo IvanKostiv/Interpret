@@ -10,7 +10,6 @@ from type.NoOperation import NoOperation
 from type.Print import Print
 from base_object.HTMLAnalyzer import *
 import threading as th
-import sys
 
 
 class Interpreter(NodeVisitor):
@@ -24,6 +23,7 @@ class Interpreter(NodeVisitor):
         self.lock = th.Lock()
 
     def visit_BinaryOperation(self, node: BinaryOperation):
+
         if node.operation.type == PLUS:
             return self.visit(node.left) + self.visit(node.right)
 
@@ -148,7 +148,6 @@ class Interpreter(NodeVisitor):
 
     def visit_Thread(self, node: Thread):
         return th.Thread(target=self.visit_Compound, args=(node.body,))
-
 
     def visit_NoOperation(self, node: NoOperation):
         pass

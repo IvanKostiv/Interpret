@@ -130,10 +130,7 @@ class Parser:
         return node
 
     def compound_statement(self):
-        # self.eat(BEGIN)
-
         nodes = self.statement_list()
-        # self.eat(END)
 
         root = Compound()
 
@@ -171,8 +168,6 @@ class Parser:
             node = self.cycle_statement()
 
         elif self.current_token.type in (PRINT, LENGTH, NUM_T, STR_T):
-            # self.eat(PRINT)
-            # node = Print(self.expr())
             node = self.built_in_function()
 
         elif self.current_token.type == THREAD:
@@ -285,7 +280,6 @@ class Parser:
         return String(node)
 
     def method(self):
-        # TODO method call
         variable = self.variable()
         self.eat(DOT)
 

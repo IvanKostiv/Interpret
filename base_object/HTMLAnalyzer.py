@@ -66,6 +66,23 @@ class HTMLAnalyzer:
 
         return List(tag_list)
 
+    def findByAttr(self, attr: String, value=None):
+        page = requests.get(self.url_page[-1])
+        self.soup = BeautifulSoup(page.text, 'html.parser')
+        tag_list = []
+        if value is None:
+            all_tags = self.soup.find_all()
+
+            for tag in all_tags:
+                if tag.has_attr(attr.value):
+                    tag_list.append(String(Token("STR", str(tag))))
+        else:
+            for tag in self.soup.find_all(attrs={attr.value: value.value}):
+                tag_list.append(String(Token("STR", str(tag))))
+
+        return List(tag_list)
+
+
     def findById(self, id_name):
         page = requests.get(self.url_page[-1])
         self.soup = BeautifulSoup(page.text, 'html.parser')

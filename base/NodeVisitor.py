@@ -1,5 +1,3 @@
-
-
 class NodeVisitor:
     def visit(self, node):
         method_name = 'visit_' + type(node).__name__

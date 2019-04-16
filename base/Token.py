@@ -13,10 +13,7 @@ THREAD = "THREAD"
 
 class Token(object):
     def __init__(self, token_type: str, value):
-        # this is token type: INTEGER, PLUS or EOF
         self.type = token_type
-
-        # this is token value: 0, ... 9
         self.value = value
 
     def __str__(self):

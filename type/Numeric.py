@@ -12,10 +12,10 @@ class Numeric(AST):
         return str(self.value)
 
     def __add__(self, other):
-        if hasattr(other, 'value'):
-            return Numeric(Token(INTEGER, self.value + other.value))
+        if type(other.value) == str:
+            return String(Token(STR, str(self.value) + other.value))
         else:
-            return Numeric(Token(INTEGER, self.value + other))
+            return Numeric(Token(INTEGER, self.value + other.value))
 
     def __sub__(self, other):
         if hasattr(other, 'value'):

@@ -27,3 +27,37 @@ thread("output2.txt"){
     		};
 	};
 };
+
+a = thread {
+	document.addUrl("http://lab4.pvi/");
+	cardTextList = document.findByClass("card-text");
+	lenCard = length(cardTextList);
+
+	if(lenCard == 0) {
+	    print("No one element's");
+	} else {
+	    for(i = 0; i < lenCard; i = i + 1) {
+	        print (cardTextList.at(i));
+	    };
+	};
+};
+
+b = thread {
+    document.addUrl("http://lab4.pvi/php/registrationPage.php");
+    navList = document.findByClass("nav-item");
+
+    lenNav = length(navList);
+
+    if(lenNav == 0) {
+	    print("No one element's");
+	} else {
+	    for(i = 0; i < lenNav; i = i + 1) {
+	        print (navList.at(i));
+	    };
+	};
+};
+
+a.start();
+a.join();
+b.start();
+b.join();
