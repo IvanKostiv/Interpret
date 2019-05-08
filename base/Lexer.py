@@ -9,7 +9,8 @@ REVERSED_KEYWORDS = {
     'else': Token('ELSE', "ELSE"),
     'while': Token("WHILE", "WHILE"),
     'for': Token("FOR", "FOR"),
-    'thread': Token("THREAD", "THREAD")
+    'thread': Token("THREAD", "THREAD"),
+    'import': Token("IMPORT", "IMPORT")
 }
 
 REVERSED_FUNCTION = [PRINT, LENGTH, NUM_T, STR_T]

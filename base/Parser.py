@@ -15,6 +15,7 @@ from type.If import If
 from type.While import While
 from type.For import For
 from type.Thread import Thread
+from type.Import import Import
 
 
 class Parser:
@@ -173,6 +174,9 @@ class Parser:
         elif self.current_token.type == THREAD:
             node = self.thread()
 
+        elif self.current_token.type == IMPORT:
+            node = self.import_node()
+
         else:
             node = self.empty()
 
@@ -330,6 +334,12 @@ class Parser:
 
     def empty(self):
         return NoOperation()
+
+    def import_node(self):
+        self.eat(IMPORT)
+        file_name = self.str()
+
+        return Import(file_name)
 
     def parse(self):
         node = self.program()

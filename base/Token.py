@@ -8,7 +8,7 @@ PRINT, LENGTH, NUM_T, STR_T = 'print', "length", "num", "str"
 TRUE, FALSE, EQUAL, LESS, GREAT, LBRANCH, RBRANCH = "TRUE", "FALSE", "EQUAL", "LESS", "GREAT", "LBRANCH", "RBRANCH"
 WHILE, FOR = "WHILE", "FOR"
 
-THREAD = "THREAD"
+THREAD, IMPORT = "THREAD", "IMPORT"
 
 
 class Token(object):

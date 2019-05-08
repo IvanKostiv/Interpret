@@ -152,6 +152,17 @@ class Interpreter(NodeVisitor):
     def visit_NoOperation(self, node: NoOperation):
         pass
 
+    def visit_Import(self, node: Import):
+        with open(node.file_name.value, 'r') as file:
+            lines_list = file.readlines()
+
+        new_lines = "".join(lines_list)
+
+        lexer = Lexer(new_lines)
+        parser = Parser(lexer)
+        interpret = Interpreter(parser)
+        interpret.interpret()
+
     def interpret(self):
         tree = self.parser.parse()
 
